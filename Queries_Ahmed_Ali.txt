@@ -1,0 +1,63 @@
+/* Query 1 */
+SELECT Artist.ArtistId, Artist.Name AS Artist_Name, 
+	SUM(InvoiceLine.Quantity*InvoiceLine.UnitPrice) AS Total_Sales,
+	COUNT(Track.Trackid) AS Songs
+FROM Artist
+JOIN Album
+ON Artist.ArtistId = Album.ArtistId
+JOIN Track
+ON Album.AlbumId = Track.AlbumId
+JOIN InvoiceLine
+ON Track.TrackId = InvoiceLine.TrackId
+GROUP BY 1
+ORDER BY 3 DESC;
+
+
+/* Query 2 */
+SELECT e.FirstName,
+	e.LastName, 
+	COUNT(Customer.CustomerId) AS No_of_Customers
+FROM Employee e
+JOIN Customer
+ON e.EmployeeId = Customer.SupportRepId
+GROUP BY 1;
+
+
+SELECT e.FirstName, e.LastName, 
+	SUM(InvoiceLine.Quantity*InvoiceLine.UnitPrice) AS total_sales
+FROM Employee e
+JOIN Customer
+ON e.EmployeeId = Customer.SupportRepId
+JOIN Invoice
+ON Customer.CustomerId = Invoice.CustomerId
+JOIN InvoiceLine
+ON Invoice.InvoiceId = InvoiceLine.InvoiceId
+GROUP BY 1
+ORDER BY 3 DESC;
+
+
+
+
+/* Query 3 */
+SELECT MediaType.Name AS Media,
+	SUM(InvoiceLine.Quantity*InvoiceLine.UnitPrice) AS Total_Sales
+FROM MediaType
+JOIN Track
+ON MediaType.MediaTypeId = Track.MediaTypeId
+JOIN InvoiceLine
+ON Track.TrackId = InvoiceLine.TrackId
+GROUP BY 1
+ORDER BY 2 DESC;
+
+
+/* Query 4 */
+SELECT Genre.Name AS Genre, 
+	SUM(InvoiceLine.Quantity*InvoiceLine.UnitPrice) AS Total_Sales
+FROM Genre
+JOIN Track
+ON Genre.GenreId = Track.GenreId
+JOIN InvoiceLine
+ON Track.TrackId = InvoiceLine.TrackId
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 5;
